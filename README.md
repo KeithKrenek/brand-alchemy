@@ -21,12 +21,12 @@ This project is a web-based application designed to emulate a sophisticated, kno
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-username/elementsist-brand-consultation.git
+   git clone ...
    ```
 
 2. Navigate to the project directory:
    ```
-   cd elementsist-brand-consultation
+   cd ...
    ```
 
 3. Install dependencies:
