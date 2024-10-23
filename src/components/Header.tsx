@@ -1,15 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Zap } from 'lucide-react';
+import { User } from 'firebase/auth';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  user: User | null;
+}
+
+const Header: React.FC<HeaderProps> = ({ user }) => {
   return (
-    <header className="bg-blue-600 text-white shadow-md">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-2">
-          <Zap size={24} />
-          <span className="text-xl font-bold">Elementsist</span>
+    <header className="bg-dark-gray text-bone p-2">
+      <div className="container mx-auto flex justify-between items-center h-6">
+        <Link to="/" className="text-2xl font-bold">
+          Brand Alchemy Formulation
         </Link>
+        <nav>
+          {user ? (
+            <span>{user.email}</span>
+          ) : (
+            <Link to="/auth" className="hover:underline">
+              Login / Sign Up
+            </Link>
+          )}
+        </nav>
       </div>
     </header>
   );
