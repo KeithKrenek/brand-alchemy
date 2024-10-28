@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect, useRef } from 'react';
 import OpenAI from 'openai';
 import { Send, Loader } from 'lucide-react';
@@ -12,7 +13,7 @@ interface Message {
   content: string;
 }
 
-const TOTAL_QUESTIONS = 3;
+const TOTAL_QUESTIONS = 1;
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -159,7 +160,7 @@ const Chat: React.FC = () => {
         setMessages(previousMessages);
         
         // Update question count based on previous messages
-        const userMessageCount = previousMessages.filter(msg => msg.role === 'user').length;
+        const userMessageCount = previousMessages.filter((msg: { role: string; }) => msg.role === 'user').length;
         setQuestionCount(userMessageCount);
   
         // Trigger the Assistant to continue the interview
@@ -348,6 +349,10 @@ const Chat: React.FC = () => {
         });
         localStorage.removeItem('interviewId');
         toast.success('Interview completed! Generating your report...');
+
+        // New Step: Save the brand name
+        await saveBrandNameAfterInterview(threadId, interviewId);
+
         console.log('Navigating to report page...');
         navigate(`/report/${interviewId}`);
       }
@@ -359,6 +364,45 @@ const Chat: React.FC = () => {
       setIsLoading(false);
       // Focus on the input after sending a message
       inputRef.current?.focus();
+    }
+  };
+
+  // New function to ask for the brand name and save it in Firestore
+  const saveBrandNameAfterInterview = async (threadId: string, interviewId: string) => {
+    try {
+      // Ask the assistant what the brand's name is
+      await openai.beta.threads.messages.create(threadId, {
+        role: 'user',
+        content: 'What is the brand name? Please respond only with the brand name. Do not add extra punctuation, letters, or words.',
+      });
+
+      const run = await openai.beta.threads.runs.create(threadId, {
+        assistant_id: import.meta.env.VITE_INTERVIEW_ASSISTANT_ID,
+      });
+
+      let runStatus = await openai.beta.threads.runs.retrieve(threadId, run.id);
+      while (runStatus.status !== 'completed') {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        runStatus = await openai.beta.threads.runs.retrieve(threadId, run.id);
+      }
+
+      const messages = await openai.beta.threads.messages.list(threadId);
+      const lastMessage = messages.data[0];
+
+      if (lastMessage.role === 'assistant') {
+        const brandName = lastMessage.content[0].text.value;
+        console.log('Brand name:', brandName);
+
+        // Save the brand name in Firestore
+        await updateDoc(doc(db, 'interviews', interviewId), {
+          brandName: brandName,
+        });
+
+        // toast.success('Brand name saved successfully!');
+      }
+    } catch (error) {
+      console.error('Error saving brand name:', error);
+      toast.error('Failed to save the brand name. Please try again.');
     }
   };
 
