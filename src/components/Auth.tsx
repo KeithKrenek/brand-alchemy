@@ -124,11 +124,11 @@ const Auth: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
-      <h1 className="text-3xl font-extrabold mb-6 text-center text-black">Elementsist</h1>
+      <h1 className="text-3xl font-extrabold mb-6 text-center text-black">Brand Alchemy Catalyst Interview</h1>
       
       {/* Email/Password Form */}
       <form onSubmit={handleAuth} className="space-y-4">
-        <h2 className="text-2xl font-normal mb-4 text-black">Welcome</h2>
+        {/* <h2 className="text-2xl font-normal mb-4 text-black">Welcome</h2> */}
         <div>
           <label className="block text-dark-gray text-sm font-bold mb-2" htmlFor="email">
             Email

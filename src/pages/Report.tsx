@@ -186,7 +186,7 @@ const Report: React.FC = () => {
 
   return (
     <div className="container mx-auto px-6 py-8">
-      <h1 className="text-4xl font-extrabold mb-6 text-black">Your Brand Alchemy Report</h1>
+      <h1 className="text-4xl font-extrabold mb-6 text-black">Your Brand Alchemy Formula</h1>
       {/* <h2 className="text-2xl font-bold mb-4 text-black">{brandName}</h2> */}
       {isLoading ? (
         <div className="text-center">
