@@ -136,7 +136,8 @@ const Chat: React.FC = () => {
       console.log('Sending initial message...');
       await sendInitialMessage(thread.id);
       
-      toast.success('New interview started');
+      // toast.success('New interview started');
+      console.log('New interview started');
     } catch (error) {
       console.error('Error creating new interview:', error);
       toast.error('Failed to start a new interview. Please try again.');
@@ -166,7 +167,8 @@ const Chat: React.FC = () => {
         // Trigger the Assistant to continue the interview
         await continueInterview(interviewData.threadId);
   
-        toast.success('Interview resumed successfully');
+        // toast.success('Interview resumed successfully');
+        console.log('Interview resumed successfully');
       } else {
         throw new Error('Interview not found');
       }
