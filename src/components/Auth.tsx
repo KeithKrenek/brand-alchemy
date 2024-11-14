@@ -69,7 +69,8 @@ const Auth: React.FC = () => {
           hasCompletedInterview: false,
           interviewId: null
         });
-        toast.success('Account connected successfully');
+        // toast.success('Account connected successfully');
+        console.log('Account connected successfully');
         navigate('/');
       } else {
         // Handle existing user
