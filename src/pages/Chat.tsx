@@ -13,7 +13,7 @@ interface Message {
   content: string;
 }
 
-const TOTAL_QUESTIONS = 1;
+const TOTAL_QUESTIONS = 36;
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -452,7 +452,7 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-150px)] bg-white">
+    <div className="flex flex-col h-[calc(100vh-100px)] bg-white">
       <Toaster position="top-center" reverseOrder={false} />
       <main className="flex-grow overflow-hidden p-6 bg-white-smoke">
         <div className="mb-4">
