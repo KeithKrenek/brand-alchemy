@@ -123,16 +123,16 @@ const Auth: React.FC = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
+    <div className="max-w-md mx-auto mt-6 p-4 bg-white rounded-lg shadow-lg">
       <h1 className="text-3xl font-extrabold mb-6 text-center text-black">Brand Alchemy Catalyst Interview</h1>
       
       {/* Email/Password Form */}
       <form onSubmit={handleAuth} className="space-y-4">
         {/* <h2 className="text-2xl font-normal mb-4 text-black">Welcome</h2> */}
         <div>
-          <label className="block text-dark-gray text-sm font-bold mb-2" htmlFor="email">
+{/*           <label className="block text-dark-gray text-sm font-bold mb-2" htmlFor="email">
             Email
-          </label>
+          </label> */}
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-dark-gray leading-tight focus:outline-none focus:ring-2 focus:ring-dark-gray"
             id="email"
@@ -144,9 +144,9 @@ const Auth: React.FC = () => {
           />
         </div>
         <div>
-          <label className="block text-dark-gray text-sm font-bold mb-2" htmlFor="password">
+{/*           <label className="block text-dark-gray text-sm font-bold mb-2" htmlFor="password">
             Password
-          </label>
+          </label> */}
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-dark-gray mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-dark-gray"
             id="password"
