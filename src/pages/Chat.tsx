@@ -452,7 +452,7 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-100px)] bg-white">
+    <div className="flex flex-col h-full bg-white">
       <Toaster position="top-center" reverseOrder={false} />
       <main className="flex-grow overflow-hidden p-6 bg-white-smoke">
         <div className="mb-4">
