@@ -7,6 +7,28 @@ import pageTwo from '../assets/page-2.png';
 import { CaslonGradReg } from '../fonts/CaslonGrad-Regular-normal.js';
 import { IbarraRealNovaBold } from '../fonts/IbarraRealNova-Bold-bold.js';
 
+// Heading normalization function to adjust all headings
+function normalizeHeadingsLevel(markdown: string): string {
+  // Check if the first two characters are "# "
+  if (markdown.startsWith('# ')) {
+    return markdown; // No changes needed
+  }
+
+  // Check if the first two characters are "###"
+  if (markdown.startsWith('###')) {
+    // Account for possibility of additional heading 1 level because Assistant decided to include a Conclusion
+    markdown = markdown.replace(/^### \*\*Conclu/gm, '#### **Conclu');       
+    // Reduce "#### " to "## "
+    markdown = markdown.replace(/^#### /gm, '## ');
+    // Reduce "### " to "# "
+    markdown = markdown.replace(/^### /gm, '# ');
+    // console.log(markdown)
+  }
+
+  // If none of the conditions match, return the original markdown
+  return markdown;
+}
+
 interface PdfOptions {
   title: string;
   brandName: string;
@@ -14,6 +36,10 @@ interface PdfOptions {
 }
 
 export const generatePDF = async ({ brandName, report }: PdfOptions): Promise<void> => {
+  // Normalize the headings in the Markdown content
+  const normalizedReport = normalizeHeadingsLevel(report);
+
+  // Create the jsPDF instance
   const pdf = new jsPDF({
     orientation: 'portrait',
     unit: 'pt',
@@ -73,6 +99,7 @@ export const generatePDF = async ({ brandName, report }: PdfOptions): Promise<vo
   pdf.addImage(pageTwo, 'PNG', 0, 0, pageWidth, pageHeight);
   // pdf.addPage();
 
+  // All further text additions will use `normalizedReport` instead of `report`
   let yPosition = margin;
 
   const addWrappedText = (
@@ -154,13 +181,14 @@ export const generatePDF = async ({ brandName, report }: PdfOptions): Promise<vo
     return currentY;
   };
 
-  const lines = report.split('\n');
+  const lines = normalizedReport.split('\n');
   let listType: string | null = null;
   // let listItemCounts: { [key: number]: number } = {};
   let listIndentLevel = 0;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
+    // console.log(line)
 
     if (yPosition > pageHeight - margin) {
       pdf.addPage();

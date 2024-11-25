@@ -13,7 +13,7 @@ interface Message {
   content: string;
 }
 
-const TOTAL_QUESTIONS = 36;
+const TOTAL_QUESTIONS = 35;
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
