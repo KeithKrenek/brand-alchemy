@@ -9,23 +9,25 @@ import { IbarraRealNovaBold } from '../fonts/IbarraRealNova-Bold-bold.js';
 
 // Heading normalization function to adjust all headings
 function normalizeHeadingsLevel(markdown: string): string {
-  // Check if the first two characters are "# "
+
+  // Check if the first two characters are "# " (indicating the use of top-level headings)
   if (markdown.startsWith('# ')) {
-    return markdown; // No changes needed
+    // Reduce all other headings if they are at top level but not part of mainSections
+    return markdown.replace(/^# (?!.*\b(The Current Situation|Recommendations|Target Audience|Keywords|The Formula|Proposed Sitemap)\b)/gm, '## ');
   }
 
-  // Check if the first two characters are "###"
+  // Check if the first two characters are "###" (indicating use of sub-level headings)
   if (markdown.startsWith('###')) {
-    // Account for possibility of additional heading 1 level because Assistant decided to include a Conclusion
-    markdown = markdown.replace(/^### \*\*Conclu/gm, '#### **Conclu');       
-    // Reduce "#### " to "## "
+    // Step 1: Reduce non-main sections by one level (### to ####)
+    markdown = markdown.replace(/^### (?!.*\b(The Current Situation|Recommendations|Target Audience|Keywords|The Formula|Proposed Sitemap)\b)/gm, '#### ');
+
+    // Step 2: Increase all headings by two levels
+    // Convert "#### " to "## "
     markdown = markdown.replace(/^#### /gm, '## ');
-    // Reduce "### " to "# "
+    // Convert "### " to "# "
     markdown = markdown.replace(/^### /gm, '# ');
-    // console.log(markdown)
   }
 
-  // If none of the conditions match, return the original markdown
   return markdown;
 }
 

@@ -204,12 +204,9 @@ const Report: React.FC = () => {
             {isPdfLoading ? 'Generating PDF...' : 'Download PDF'}
           </button>
           <div className="bg-white rounded-lg shadow-lg p-6 border border-neutral-gray">
-            {/* <ReactMarkdown 
-              className="prose max-w-none"
-              components={renderers}
-            >
-              {report}
-            </ReactMarkdown> */}
+            <p className="text-lg">
+              Thanks for completing the interview! We encourage you to download your report and take some time to review it. If you have any questions, feel free to reach out via the course community. We're here to help!
+            </p>
           </div>
         </>
       )}
